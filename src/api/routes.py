@@ -18,7 +18,7 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-@app.route('/user', methods=['POST'])
+@app.route('/user', methods=['GET'])
 def create_user():
     user = User(email="my_super@email.com", password="my_super@email.com", gender="male")
     db.session.add(user)
@@ -27,7 +27,7 @@ def create_user():
 
 
 
-@app.route('/planets', methods=['POST'])
+@app.route('/planets', methods=['GET'])
 def create_planet():
     planet = Planet(name="", climate="", rotation_period="", orbital_period="", diameter="", terrain="", population="")
     db.session.add(planet)
@@ -36,7 +36,7 @@ def create_planet():
 
 
 
-@app.route('/characters', methods=['POST'])
+@app.route('/characters', methods=['GET'])
 def create_character():
     character = Character(name="", height="", hair_color="", eye_color="", birth_year="", gender="")
     db.session.add(character)
