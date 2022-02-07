@@ -24,3 +24,21 @@ def create_user():
     db.session.add(user)
     db.session.commit()
     return jsonify(user.serialize())
+
+
+
+@app.route('/planets', methods=['POST'])
+def create_planet():
+    planet = Planet(name="", climate="", rotation_period="", orbital_period="", diameter="", terrain="", population="")
+    db.session.add(planet)
+    db.session.commit()
+    return jsonify(planet.serialize())
+
+
+
+@app.route('/characters', methods=['POST'])
+def create_character():
+    character = Character(name="", height="", hair_color="", eye_color="", birth_year="", gender="")
+    db.session.add(character)
+    db.session.commit()
+    return jsonify(character.serialize())
