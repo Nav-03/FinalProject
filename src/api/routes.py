@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Character, Planet
+from api.models import db, User, Character, Planet, Favorite
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -38,7 +38,6 @@ def create_planet():
 
 @api.route('/characters', methods=['GET'])
 def create_character():
-    character = Character(name="", height="", hair_color="", eye_color="", birth_year="", gender="")
-    db.session.add(character)
-    db.session.commit()
+    character_query = Character.query.all()
+    all_serialized_characters = list(map(lambda item: item.serialize(), character_query))
     return jsonify(character.serialize())
