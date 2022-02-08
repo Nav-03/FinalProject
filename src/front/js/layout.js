@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+import CharacterDetails from "./pages/CharacterDetails";
+import PlanetDetails from "./pages/PlanetDetails";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -25,11 +25,11 @@ const Layout = () => {
 						<Route exact path="/">
 							<Home />
 						</Route>
-						<Route exact path="/demo">
-							<Demo />
+						<Route exact path="/people/:char_id">
+							<CharacterDetails />
 						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
+						<Route exact path="/planet/:planet_id">
+							<PlanetDetails />
 						</Route>
 						<Route>
 							<h1>Not found!</h1>
@@ -43,3 +43,11 @@ const Layout = () => {
 };
 
 export default injectContext(Layout);
+
+
+
+
+
+
+
+
