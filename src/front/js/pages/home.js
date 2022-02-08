@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import rigoImage from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
-import Card from "../component/Card.js";
+import Card from "../component/PlanetCard.js";
 import { Context } from "../store/appContext";
 
 export const Home = (props) => {
