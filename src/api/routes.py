@@ -29,10 +29,25 @@ def create_user():
 
 @api.route('/planets', methods=['GET'])
 def create_planet():
-    planet = Planet(name="", climate="", rotation_period="", orbital_period="", diameter="", terrain="", population="")
+    planet = Planet(name="name", climate="climate", rotation_period="rotation_period", orbital_period="orbital_period", diameter="diameter", terrain="terrain", population="population")
     db.session.add(planet)
     db.session.commit()
     return jsonify(planet.serialize())
+
+
+
+@app.route("/token", methods=["POST"])
+def create_token():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    # Query your database for username and password
+    user = User.query.filter_by(username=username, password=password).first()
+    if user is None:
+        # the user was not found on the database
+        return jsonify({"msg": "User not found"}), 401
+    
+    return jsonify(character.serialize())
+
 
 
 

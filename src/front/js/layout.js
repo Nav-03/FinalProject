@@ -31,6 +31,9 @@ const Layout = () => {
 						<Route exact path="/planet/:planet_id">
 							<PlanetDetails />
 						</Route>
+						<Route exact path="/login">
+							<login />
+						</Route>
 						<Route>
 							<h1>Not found!</h1>
 						</Route>

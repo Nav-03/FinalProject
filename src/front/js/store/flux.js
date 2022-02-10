@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			loadPlanets: async () => {
-				const response = await fetch("https://www.swapi.tech/api/planets");
+				const response = await fetch(`/api/planets`);
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myModifiedPlanets = await Promise.all(payload.results.map(async (p) => {
@@ -29,7 +29,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			loadCharacters: async () => {
-				const response = await fetch("https://www.swapi.tech/api/people");
+				const response = await fetch(process.env.BACKEND_URL + `/api/people`);
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myModifiedCharacters = await Promise.all(payload.results.map(async (c) => {
