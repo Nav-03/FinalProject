@@ -9,7 +9,7 @@ const CharacterCard = (props) => {
     let buttonClass = "btn btn-outline-danger";
     if (props.isFavorite) buttonClass = "btn btn-danger";
 
-    // console.log("the card for "+props.name+" has the class "+buttonClass, props.isFavorite);
+    console.log("the card for " + props.name + " has the class " + buttonClass, props.isFavorite);
 
     return (
         <div className="card mx-4" style={{ width: "20rem", display: "inline-block" }}>

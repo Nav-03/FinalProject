@@ -27,7 +27,7 @@ def create_user():
 
 
 
-@api.route('/planets', methods=['GET'])
+@api.route('/planet', methods=['GET'])
 def create_planet():
     planet = Planet(name="name", climate="climate", rotation_period="rotation_period", orbital_period="orbital_period", diameter="diameter", terrain="terrain", population="population")
     db.session.add(planet)
@@ -51,7 +51,7 @@ def create_token():
 
 
 
-@api.route('/characters', methods=['GET'])
+@api.route('/character', methods=['GET'])
 def create_character():
     character_query = Character.query.all()
     all_serialized_characters = list(map(lambda item: item.serialize(), character_query))

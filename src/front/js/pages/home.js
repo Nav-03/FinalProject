@@ -11,13 +11,13 @@ export const Home = (props) => {
 	return <>
 		<p className="font-weight-bold display-4 ">Characters</p>
 		<div className="horizontalScroll my-4">
-			{store.characters.map((c) => <Card entity={c} isFavorite={store.favorites.find(fav => fav.name === c.name)} />)}
+			{store.characters.map((c) => <CharacterCard entity={c} isFavorite={store.favorites.find(fav => fav.name === c.name)} />)}
 		</div>
 
 
 		<p className="font-weight-bold display-4 text-left">Planets</p>
 		<div className="horizontalScroll my-4">
-			{store.planets.map(p => <Card entity={p} isFavorite={store.favorites.find(fav => fav.name === p.name)} />)}
+			{store.planets.map(p => <PlanetCard entity={p} isFavorite={store.favorites.find(fav => fav.name === p.name)} />)}
 		</div>
 	</>
 }
