@@ -1,40 +1,86 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { Context } from "../store/appContext.js";
 import { Link, useParams } from "react-router-dom";
-import { Context } from "../store/appContext";
 
-// import "../../styles/demo.css";
-
-
-const CharacterDetails = () => {
+export const CharacterDetails = (props) => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
-
-	console.log("I need to render the planet ", params.char_id)
-	const myCharacter = store.characters.find(c => c.uid === params.char_id)
-	if (myCharacter === null || myCharacter === undefined) {
-		return <img className="fixed mx-auto" src="https://media0.giphy.com/media/hL9q5k9dk9l0wGd4e0/giphy.gif?cid=ecf05e47r4ep5pv335o8gr49buhwlwyka7f9xfiry4djfaja&rid=giphy.gif&ct=g" />
-	}
 	return (
-		<div className="card mb-3" style={{ maxWidth: "100%" }}>
-			<div className="row g-0">
-				<div className="col-md-4">
-					<img src="https://petpress.net/wp-content/uploads/2020/03/star-wars-cat-names.jpg" className="img-fluid rounded-start" alt="..." />
+		<div className="container">
+			<div className="row">
+				<div className="col">
+					<img
+						src={
+							store.images["/character/" + params.theuid] ||
+							"https://via.placeholder.com/800x600"
+						}
+						className="float-start"
+						height="600"
+						width="800"
+					></img>
 				</div>
-				<div className="col-md-8 text-center">
-					<div className="card-body px-5">
-						<h5 className="card-title">{myCharacter.name}</h5>
-						<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-						<p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-					</div>
+				<div className="col text-center">
+					<h1 className="mt-4">{store.characters[params.theuid]?.name}</h1>
+					<p className="description">
+						Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+						accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+						quae ab illo inventore veritatis et quasi architecto beatae vitae
+						dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+						aspernatur
+					</p>
+				</div>
+			</div>
+			<hr className="detailline"></hr>
+			<div className="row factsbox">
+				<div className="col facts">
+					<h5>
+						<b>Name</b>
+					</h5>
+					<p>{store.characters[params.theuid]?.name}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Birth Year</b>
+					</h5>
+					<p>{store.characters[params.theuid]?.birth_year}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Gender</b>
+					</h5>
+					<p>{store.characters[params.theuid]?.gender}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Height (cm)</b>
+					</h5>
+					<p>{store.characters[params.theuid]?.height}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Skin Color</b>
+					</h5>
+					<p>{store.characters[params.theuid]?.skin_color}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Eye Color</b>
+					</h5>
+					<p>{store.characters[params.theuid]?.eye_color}</p>
 				</div>
 			</div>
 		</div>
 	);
 };
-
-export default CharacterDetails;
-
-
-
-
-
+CharacterDetails.propTypes = {
+	uid: PropTypes.string,
+	img: PropTypes.string,
+	name: PropTypes.string,
+	birth_year: PropTypes.string,
+	height: PropTypes.string,
+	skin_color: PropTypes.string,
+	gender: PropTypes.string,
+	hair_color: PropTypes.string,
+	eye_color: PropTypes.string,
+};

@@ -1,41 +1,86 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { Context } from "../store/appContext.js";
 import { Link, useParams } from "react-router-dom";
-import { Context } from "../store/appContext";
 
-// import "../../styles/demo.css";
-
-
-const PlanetDetails = () => {
+export const PlanetDetails = (props) => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
-
-	console.log("I need to render the planet ", params.planet_id)
-	console.log("this is the store", store.planets)
-	const myPlanet = store.planets.find(p => p.uid === params.planet_id)
-	if (myPlanet === null || myPlanet === undefined) {
-		return <img className="fixed mx-auto" src="https://media0.giphy.com/media/hL9q5k9dk9l0wGd4e0/giphy.gif?cid=ecf05e47r4ep5pv335o8gr49buhwlwyka7f9xfiry4djfaja&rid=giphy.gif&ct=g" />
-	}
 	return (
-		<div className="card mb-3" style={{ maxWidth: "100%" }}>
-			<div className="row g-0">
-				<div className="col-md-4">
-					<img src="https://petpress.net/wp-content/uploads/2020/03/star-wars-cat-names.jpg" className="img-fluid rounded-start" alt="..." />
+		<div className="container">
+			<div className="row">
+				<div className="col">
+					<img
+						src={
+							store.images["/planet/" + params.theuid] ||
+							"https://via.placeholder.com/800x600"
+						}
+						className="float-start"
+						height="600"
+						width="800"
+					></img>
 				</div>
-				<div className="col-md-8 text-center">
-					<div className="card-body px-5">
-						<h5 className="card-title">{myPlanet.name}</h5>
-						<p className="card-text">{myPlanet.terrain}</p>
-						<p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-					</div>
+				<div className="col text-center">
+					<h1 className="mt-4">{store.planets[params.theuid]?.name}</h1>
+					<p className="description">
+						Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+						accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+						quae ab illo inventore veritatis et quasi architecto beatae vitae
+						dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+						aspernatur
+					</p>
+				</div>
+			</div>
+			<hr className="detailline"></hr>
+			<div className="row factsbox">
+				<div className="col facts">
+					<h5>
+						<b>Name</b>
+					</h5>
+					<p>{store.planets[params.theuid]?.name}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Climate</b>
+					</h5>
+					<p>{store.planets[params.theuid]?.climate}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Population</b>
+					</h5>
+					<p>{store.planets[params.theuid]?.population}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Orbital Period</b>
+					</h5>
+					<p>{store.planets[params.theuid]?.orbital_period}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Rotation Period</b>
+					</h5>
+					<p>{store.planets[params.theuid]?.rotation_period}</p>
+				</div>
+				<div className="col facts">
+					<h5>
+						<b>Diameter</b>
+					</h5>
+					<p>{store.planets[params.theuid]?.diameter}</p>
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default PlanetDetails;
-
-
-
-
-
+PlanetDetails.propTypes = {
+	uid: PropTypes.number,
+	img: PropTypes.string,
+	name: PropTypes.string,
+	climate: PropTypes.string,
+	population: PropTypes.string,
+	orbital_period: PropTypes.string,
+	rotation_period: PropTypes.string,
+	diameter: PropTypes.string,
+};

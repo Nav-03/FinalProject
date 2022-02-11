@@ -4,6 +4,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Character, Planet, Favorite
 from api.utils import generate_sitemap, APIException
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 api = Blueprint('api', __name__)
 
@@ -17,42 +18,44 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-
-@api.route('/user', methods=['GET'])
+@api.route('/user', methods=['POST'])
 def create_user():
-    user = User(email="my_super@email.com", password="my_super@email.com", gender="male")
+    user = User(email="my_super1@email.com", password="blahblah", gender="male")
     db.session.add(user)
     db.session.commit()
     return jsonify(user.serialize())
 
-
+@api.route('/character', methods=['GET'])
+def get_character():
+    character_query = Character.query.all()
+    all_serialized_characters = list(map(lambda item:item.serialize(), character_query))
+    return jsonify(all_serialized_characters)
 
 @api.route('/planet', methods=['GET'])
-def create_planet():
-    planet = Planet(name="name", climate="climate", rotation_period="rotation_period", orbital_period="orbital_period", diameter="diameter", terrain="terrain", population="population")
-    db.session.add(planet)
-    db.session.commit()
-    return jsonify(planet.serialize())
+def get_planet():
+    planet_query = Planet.query.all()
+    all_serialized_planets = list(map(lambda item:item.serialize(), planet_query))
+    return jsonify(all_serialized_planets)
 
-
-
-@app.route("/token", methods=["POST"])
-def create_token():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
-    # Query your database for username and password
-    user = User.query.filter_by(username=username, password=password).first()
+@api.route('/favorite', methods=['GET'])
+@jwt_required()
+def get_favorite():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
     if user is None:
-        # the user was not found on the database
-        return jsonify({"msg": "User not found"}), 401
-    
-    return jsonify(character.serialize())
+        return jsonify({"msg": "User Not Found"}), 403
+    favorite_query = Favorite.query.filter_by(user_id=current_user_id)
+    all_serialized_favorite = list(map(lambda item:item.serialize(), favorite_query))
+    return jsonify(all_serialized_favorite)
 
-
-
-
-@api.route('/character', methods=['GET'])
-def create_character():
-    character_query = Character.query.all()
-    all_serialized_characters = list(map(lambda item: item.serialize(), character_query))
-    return jsonify(character.serialize())
+@api.route('/token', methods=['POST'])
+def create_token():
+    if request.json is None:
+        return jsonify({"msg":"Missing the payload"}), 400
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    user = User.query.filter_by(email=email, password=password).first()
+    if user is None:
+        return jsonify({"msg": "Missing email or password"}), 401
+    access_token = create_access_token(identity=user.id)
+    return jsonify({ "token": access_token, "user_id": user.id })

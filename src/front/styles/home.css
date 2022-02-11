@@ -1,6 +1,28 @@
-.horizontalScroll {
-  overflow: auto;
-  white-space: nowrap;
-  text-align: center;
-  justify-content: space-around;
+.headers {
+  color: rgb(206, 64, 64);
+}
+
+.detailline {
+  border-top: 2px solid rgb(206, 64, 64);
+}
+
+.facts {
+  color: rgb(206, 64, 64);
+}
+
+.description {
+  font-size: 30px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+.list-items {
+  color: blue;
+}
+.favoriteDelete {
+  color: black;
+  float: right;
 }

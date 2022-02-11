@@ -1,23 +1,51 @@
-import React, { useContext, useEffect } from "react";
-import rigoImage from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
-import PlanetCard from "../component/PlanetCard";
-import CharacterCard from "../component/CharacterCard";
-import { Context } from "../store/appContext";
+import React, { useContext } from "react";
+import "/src/front/styles/home.css";
+import { PlanetCards } from "../component/PlanetCard.js";
+import { CharacterCards } from "../component/CharacterCard.js";
+import { Context } from "../store/appContext.js";
 
 export const Home = (props) => {
 	const { store, actions } = useContext(Context);
-	console.log("these are the favorites", store)
-	return <>
-		<p className="font-weight-bold display-4 ">Characters</p>
-		<div className="horizontalScroll my-4">
-			{store.characters.map((c) => <CharacterCard entity={c} isFavorite={store.favorites.find(fav => fav.name === c.name)} />)}
+	return (
+		<div className="container-fluid p-0 pb-4 m-0">
+			<h1 className="mx-0 px-4 pb-2 pt-4 headers">Characters</h1>
+			<div
+				className="d-flex flex-row mx-auto"
+				style={{ width: "90%", overflow: "auto" }}
+			>
+				{store.characters.map((c, i) => (
+					<CharacterCards
+						data={c}
+						uid={store.characters[i].uid}
+						favStatus={store.characters[i].isFavorite}
+						name={store.characters[i].name}
+						gender={store.characters[i].gender}
+						hair_color={store.characters[i].hair_color}
+						eye_color={store.characters[i].eye_color}
+						img="https://via.placeholder.com/400x200"
+						details={store.characters[i].details}
+						key={i}
+					/>
+				))}
+			</div>
+			<h1 className="mx-0 px-4 pb-2 pt-4 headers">Planets</h1>
+			<div
+				className="d-flex flex-row mx-auto mb-4"
+				style={{ width: "90%", overflow: "auto" }}
+			>
+				{store.planets.map((c, i) => (
+					<PlanetCards
+						data={c}
+						uid={store.planets[i].uid}
+						favStatus={store.planets[i].isFavorite}
+						name={store.planets[i].name}
+						climate={store.planets[i].climate}
+						population={store.planets[i].population}
+						details={store.planets[i].details}
+						key={i}
+					/>
+				))}
+			</div>
 		</div>
-
-
-		<p className="font-weight-bold display-4 text-left">Planets</p>
-		<div className="horizontalScroll my-4">
-			{store.planets.map(p => <PlanetCard entity={p} isFavorite={store.favorites.find(fav => fav.name === p.name)} />)}
-		</div>
-	</>
-}
+	);
+};
