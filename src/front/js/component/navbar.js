@@ -4,7 +4,7 @@ import { Context } from "../store/appContext.js";
 
 export const Navbar = (props) => {
 	const { store, actions } = useContext(Context);
-
+	const session = actions.getCurrentSession();
 	return (
 		<nav className="navbar navbar-light bg-light mb-3">
 			<Link to="/">
@@ -16,9 +16,12 @@ export const Navbar = (props) => {
 					></img>
 				</span>
 			</Link>
-			<Link to="/login">
-				<button>Log me in!</button>
-			</Link>
+			{session ?
+				<button onClick={() => actions.clearSession()}>Log Out</button> :
+				<Link to="/login">
+					<button>Log me in!</button>
+				</Link>}
+
 			<div className="dropdown">
 				<button
 					className="btn btn-primary dropdown-toggle me-5"

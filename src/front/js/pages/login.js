@@ -1,18 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "/src/front/styles/home.css";
 import { PlanetCards } from "../component/PlanetCard.js";
 import { CharacterCards } from "../component/CharacterCard.js";
 import { Context } from "../store/appContext.js";
+import { useHistory } from "react-router-dom"
 
 export const Login = (props) => {
+    const history = useHistory();
     const { store, actions } = useContext(Context);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     return (
-        <form className="container">
+        <form
+            onSubmit={(e) => {
+                actions.createToken(email, password).then((session) => history.push("/"));
+                e.preventDefault();
+            }}
+            className="btn btn-primary" className="container">
             <div className="mb-3">
                 <label for="exampleInputEmail1" className="form-label">
                     Email address
                 </label>
-                <input
+                <input onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                     type="email"
                     className="form-control"
                     id="exampleInputEmail1"
@@ -26,7 +36,8 @@ export const Login = (props) => {
                 <label for="exampleInputPassword1" className="form-label">
                     Password
                 </label>
-                <input
+                <input onChange={(e) => setPassword(e.target.value)}
+                    value={password}
                     type="password"
                     className="form-control"
                     id="exampleInputPassword1"
@@ -42,8 +53,8 @@ export const Login = (props) => {
                     Check me out
                 </label>
             </div>
-            <button type="submit" className="btn btn-primary">
-                Submit
+            <button>
+                Login
             </button>
         </form>
     );

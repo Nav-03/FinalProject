@@ -25,6 +25,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 							fetch().then().then(data => setStore({ "foo": data.bar }))
 						*/
 			},
+			clearSession: () => {
+				localStorage.removeItem("session")
+				setStore({ "session": null })
+			},
 			addFavorites: (favorite) => {
 				const store = getStore();
 				if (favorite.isFavorite === true) {
@@ -92,6 +96,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ favorites: payload });
 				}
 			},
+			getCurrentSession: () => {
+				const session = JSON.parse(localStorage.getItem('session'));
+				return session;
+			},
+			createToken: async (email, password) => {
+				const options = {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email: email, password: password })
+				}
+				const response = await fetch(process.env.BACKEND_URL + `/api/token`);
+				if (response.status === 200) {
+					const payload = await response.json();
+					localStorage.setItem('session', JSON.stringify(payload));
+					setStore({ session: payload });
+					return payload;
+				}
+			}
 		},
 	};
 };
