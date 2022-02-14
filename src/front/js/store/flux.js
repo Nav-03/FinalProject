@@ -68,7 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myNewCharacters = payload.map((people, i) => {
-						(people["details"] = "/character/"), (people["isFavorite"] = false);
+						(people["details"] = "api/character/"), (people["isFavorite"] = false);
 						people["uid"] = i;
 						return people;
 					});
@@ -81,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myNewPlanets = payload.map((planets, i) => {
-						(planets.details = "/planet/"), (planets.isFavorite = false);
+						(planets.details = "api/planet/"), (planets.isFavorite = false);
 						planets.uid = i;
 						return planets;
 					});
