@@ -22,12 +22,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			loadSomeData: () => {
 				/*
-							fetch().then().then(data => setStore({ "foo": data.bar }))
-						*/
+				  fetch().then().then(data => setStore({ "foo": data.bar }))
+				*/
 			},
 			clearSession: () => {
-				localStorage.removeItem("session")
-				setStore({ "session": null })
+				localStorage.removeItem("session");
+				setStore({ session: null });
 			},
 			addFavorites: (favorite) => {
 				const store = getStore();
@@ -68,7 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myNewCharacters = payload.map((people, i) => {
-						(people["details"] = "api/character/"), (people["isFavorite"] = false);
+						(people["details"] = "/character/"), (people["isFavorite"] = false);
 						people["uid"] = i;
 						return people;
 					});
@@ -81,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myNewPlanets = payload.map((planets, i) => {
-						(planets.details = "api/planet/"), (planets.isFavorite = false);
+						(planets.details = "/planet/"), (planets.isFavorite = false);
 						planets.uid = i;
 						return planets;
 					});
@@ -89,6 +89,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(myNewPlanets);
 				}
 			},
+
+			addPlanet: async (name, climate,
+				rotation_period,
+				orbital_period,
+				diameter,
+				terrain,
+				population,
+				img_url) => {
+				const options = {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						name: name,
+						climate: climate,
+						rotation_period: rotation_period,
+						orbital_period: orbital_period,
+						diameter: diameter,
+						terrain: terrain,
+						population: population
+					})
+				}
+				const response = await fetch(process.env.BACKEND_URL + `/api/planet`);
+				if (response.status === 200) {
+					const payload = await response.json();
+					console.log('planet created successfully!');
+					return payload;
+				}
+			},
+
 			loadFavorites: async () => {
 				const response = await fetch(process.env.BACKEND_URL + `/api/favorite`);
 				if (response.status === 200) {
@@ -97,23 +126,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			getCurrentSession: () => {
-				const session = JSON.parse(localStorage.getItem('session'));
+				const session = JSON.parse(localStorage.getItem("session"));
 				return session;
 			},
-			createToken: async (email, password) => {
+			createNewSession: async (email, password) => {
 				const options = {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ email: email, password: password })
-				}
-				const response = await fetch(process.env.BACKEND_URL + `/api/token`);
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({ email: email, password: password }),
+				};
+				const response = await fetch(
+					process.env.BACKEND_URL + `/api/token`,
+					options
+				);
 				if (response.status === 200) {
 					const payload = await response.json();
-					localStorage.setItem('session', JSON.stringify(payload));
+					localStorage.setItem("session", JSON.stringify(payload));
 					setStore({ session: payload });
-					return payload;
+					return payload; //this is gonna make the promise resolve
+					// return jsonify({ "token": access_token, "user_id": user.id })
 				}
-			}
+			},
 		},
 	};
 };

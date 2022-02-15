@@ -25,6 +25,31 @@ def create_user():
     db.session.commit()
     return jsonify(user.serialize())
 
+
+@api.route('/planet', methods=['POST'])
+def create_planet():
+    name = request.json.get('name', None)
+    climate = request.json.get('climate', None)
+    rotation_period = request.json.get('rotation_period', None)
+    orbital_period = request.json.get('orbital_period', None)
+    diameter = request.json.get('diameter', None)
+    terrain = request.json.get('terrain', None)
+    population = request.json.get('population', None)
+    img_url = request.json.get('img_url', None)
+    
+    planet = Planet(name=name,
+                    climate=climate,
+                    rotation_period=rotation_period,
+                    orbital_period=orbital_period,
+                    diameter=diameter,
+                    terrain=terrain,
+                    population=population, 
+                    img_url=img_url)
+    db.session.add(planet)
+    db.session.commit()
+    return jsonify(planet.serialize())
+
+
 @api.route('/character', methods=['GET'])
 def get_character():
     character_query = Character.query.all()

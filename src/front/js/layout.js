@@ -7,7 +7,7 @@ import { PlanetDetails } from "./pages/PlanetDetails";
 import { CharacterDetails } from "./pages/CharacterDetails.js";
 import { Login } from "./pages/login.js";
 import injectContext from "./store/appContext.js";
-
+import { CreatePlanet } from "./pages/CreatePlanet.js";
 import { Navbar } from "./component/navbar.js";
 import { Footer } from "./component/footer.js";
 import { Context } from "./store/appContext.js";
@@ -31,9 +31,13 @@ const Layout = () => {
 						<Route exact path="/character/:theuid">
 							<CharacterDetails />
 						</Route>
+						<Route exact path="/planet/new">
+							<CreatePlanet />
+						</Route>
 						<Route exact path="/planet/:theuid">
 							<PlanetDetails />
 						</Route>
+
 						<Route exact path="/login">
 							<Login />
 						</Route>

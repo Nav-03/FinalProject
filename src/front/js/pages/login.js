@@ -13,15 +13,19 @@ export const Login = (props) => {
     return (
         <form
             onSubmit={(e) => {
-                actions.createToken(email, password).then((session) => history.push("/"));
+                actions
+                    .createNewSession(email, password)
+                    .then((session) => history.push("/"));
                 e.preventDefault();
             }}
-            className="btn btn-primary" className="container">
+            className="container"
+        >
             <div className="mb-3">
                 <label for="exampleInputEmail1" className="form-label">
                     Email address
                 </label>
-                <input onChange={(e) => setEmail(e.target.value)}
+                <input
+                    onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     type="email"
                     className="form-control"
@@ -36,7 +40,8 @@ export const Login = (props) => {
                 <label for="exampleInputPassword1" className="form-label">
                     Password
                 </label>
-                <input onChange={(e) => setPassword(e.target.value)}
+                <input
+                    onChange={(e) => setPassword(e.target.value)}
                     value={password}
                     type="password"
                     className="form-control"
@@ -53,9 +58,7 @@ export const Login = (props) => {
                     Check me out
                 </label>
             </div>
-            <button>
-                Login
-            </button>
+            <button className="btn btn-primary">Login</button>
         </form>
     );
 };
