@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import "/workspace/react-flask-hello/src/front/styles/home.css";
+import "/src/front/styles/home.css";
 
-import { Context } from "/workspace/react-flask-hello/src/front/js/store/appContext.js";
+import { Context } from "/src/front/js/store/appContext.js";
 import { useHistory } from "react-router-dom";
 
 

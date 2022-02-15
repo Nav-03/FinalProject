@@ -11,6 +11,7 @@ import { CreatePlanet } from "./pages/CreatePlanet.js";
 import { Navbar } from "./component/navbar.js";
 import { Footer } from "./component/footer.js";
 import { Context } from "./store/appContext.js";
+import { demo } from "./pages/demo.js";
 
 //create your first component
 const Layout = () => {

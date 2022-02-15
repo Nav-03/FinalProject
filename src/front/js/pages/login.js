@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import "/src/front/styles/home.css";
-import { PlanetCards } from "../component/PlanetCard.js";
-import { CharacterCards } from "../component/CharacterCard.js";
+
 import { Context } from "../store/appContext.js";
 import { useHistory } from "react-router-dom"
 

@@ -63,12 +63,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			loadCharacters: async () => {
 				const response = await fetch(
-					process.env.BACKEND_URL + `/api/character`
+					process.env.BACKEND_URL + `/character`
 				);
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myNewCharacters = payload.map((people, i) => {
-						(people["details"] = "/character/"), (people["isFavorite"] = false);
+						(people["details"] = "/character"), (people["isFavorite"] = false);
 						people["uid"] = i;
 						return people;
 					});
@@ -90,7 +90,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			addPlanet: async (name, climate,
+			addPlanet: async (name,
+				climate,
 				rotation_period,
 				orbital_period,
 				diameter,
