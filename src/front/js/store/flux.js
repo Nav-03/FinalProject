@@ -68,7 +68,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (response.status === 200) {
 					const payload = await response.json();
 					const myNewCharacters = payload.map((people, i) => {
-						(people["details"] = "/api/character"), (people["isFavorite"] = false);
+						(people["details"] = "/character/"), (people["isFavorite"] = false);
 						people["uid"] = i;
 						return people;
 					});
