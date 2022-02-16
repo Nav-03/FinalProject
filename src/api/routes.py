@@ -55,7 +55,7 @@ def get_character():
 
 
 @api.route('/favorite', methods=['GET'])
-# @jwt_required()
+@jwt_required()
 def get_favorite():
     current_user_id = get_jwt_identity()
     user = User.query.get(current_user_id)
