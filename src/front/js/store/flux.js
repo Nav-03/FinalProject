@@ -32,7 +32,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			addFavorites: (favorite) => {
 				const store = getStore();
 				if (favorite.isFavorite === true) {
-					favorite.isFavorite = false;
+					favorite.isFavorite === false;
 					setStore({
 						favorites: store.favorites.filter(
 							(favoriteItem) =>
