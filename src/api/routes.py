@@ -20,7 +20,7 @@ api = Blueprint('api', __name__)
 
 @api.route('/user', methods=['POST'])
 def create_user():
-    user = User(email="my_super1@email.com", password="blahblah", gender="male")
+    user = User(email=email, password=password)
     db.session.add(user)
     db.session.commit()
     return jsonify(user.serialize())
