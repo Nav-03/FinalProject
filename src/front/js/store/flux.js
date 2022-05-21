@@ -108,7 +108,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						orbital_period: orbital_period,
 						diameter: diameter,
 						terrain: terrain,
-						population: population
+						population: population,
+						img_url: img_url,
 					})
 				}
 				const response = await fetch(process.env.BACKEND_URL + `/api/planet`);
